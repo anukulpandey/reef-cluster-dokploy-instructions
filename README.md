@@ -2,7 +2,7 @@
 
 A Reef validator cluster can be deployed in **two different ways** on Dokploy:
 
-### 🟢 **[Method 1: Single Template (Full Cluster Setup)](#method-1-single-template---full-cluster-setup)**
+### 🟢 **[Method 1: Single Template (Full Cluster Setup)](#method-1-single-template---full-cluster-setup)** [RECOMMENDED]
 
 A single deployment handles bootnode + all validators + RPC.
 
