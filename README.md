@@ -6,7 +6,72 @@ We can run the cluster in 2 ways.
 
 2. Multiple templates ( Separate bootstrap and validators setup )
 
+=========================
 
+The first step is to generate keys for running the validator, you can do it as follows:
+
+Click on create service
+
+<img width="1348" height="767" alt="Screenshot 2025-12-12 at 2 32 48 PM" src="https://github.com/user-attachments/assets/61ffc1b3-7601-4fa0-a8c9-37dd91fe5f0c" />
+
+Select Template from the menu
+
+Add `https://d1633d6c.templates-70k.pages.dev/` url at top right
+
+Search Reef 
+
+<img width="1345" height="760" alt="Screenshot 2025-12-12 at 2 33 41 PM" src="https://github.com/user-attachments/assets/0a73fe6e-7e5d-4553-bcd7-0dca6fc2a831" />
+
+Click on "Create" button on `Reef Chain - Keys Generator` card and click confirm on popup.
+
+<img width="1352" height="768" alt="Screenshot 2025-12-12 at 2 34 43 PM" src="https://github.com/user-attachments/assets/2a8cae47-6ad4-4d82-aa79-3f7dfb9599ff" />
+
+Open the newly generated card service and click on `Deploy` 
+
+<img width="1352" height="760" alt="Screenshot 2025-12-12 at 4 07 57 PM" src="https://github.com/user-attachments/assets/82aa445a-c1b7-46de-aa20-abbecc5b79ba" />
+
+The logs must look like this, it has generated 3 validators keypairs.
+
+<img width="1352" height="803" alt="Screenshot 2025-12-12 at 4 09 03 PM" src="https://github.com/user-attachments/assets/6566a708-3d07-4c90-8dba-26a123dc8514" />
+
+You will get keypairs like these
+
+<img width="1352" height="805" alt="Screenshot 2025-12-12 at 4 10 30 PM" src="https://github.com/user-attachments/assets/1efb99f2-aa24-4ff4-8326-da8a79104afd" />
+
+Copy the address and seed, we will need these later when configuring the validators
+
+Now create custom spec file using the generator, for that go to templates and create the one with name `Reef Chain - Custom Spec Generator` :
+
+<img width="1352" height="808" alt="Screenshot 2025-12-12 at 4 36 21 PM" src="https://github.com/user-attachments/assets/990a8521-7a7e-43ae-aaa1-72b1ac253a13" />
+
+This service runs at port 8000. i.e `http://reef.host:8000`, you can change the port from environment of this template.
+
+We will use this url later in the cluster to generate and download the custom spec file with the validator info we will provide.
+
+From templates select `Reef Chain - Dev Cluster` :
+
+<img width="1352" height="762" alt="Screenshot 2025-12-12 at 5 26 59 PM" src="https://github.com/user-attachments/assets/33337aa2-a40e-4d91-9b4a-a77881844222" />
+
+Go to environment and update the variables with the ones you have generated using `Reef Chain - Keys Generator`:
+
+<img width="1352" height="767" alt="Screenshot 2025-12-12 at 5 28 07 PM" src="https://github.com/user-attachments/assets/7c05a2e1-ec86-48c2-8015-9909fa44b0fc" />
+
+You can change the URL of specgenurl with the one you have deployed or use `http://reef.host:8000` as default
+
+Once done with these, click on deploy and the logs should look like this.
+
+<img width="1352" height="765" alt="Screenshot 2025-12-12 at 5 30 09 PM" src="https://github.com/user-attachments/assets/dabf1beb-900b-4627-a656-78d94cb2771b" />
+
+To add more validators you can generate more validator keys using Reef Chain Keys Generator template and use them with the following template.
+
+
+<img width="1347" height="754" alt="Screenshot 2025-12-12 at 4 18 57 PM" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132" />
+
+Select `Reef Chain - Validator`
+
+and replace the environments and deploy it.
+
+==========================
 
 The first step is to generate keys for running the validator, you can do it as follows:
 
