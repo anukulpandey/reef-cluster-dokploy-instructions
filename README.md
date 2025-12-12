@@ -63,7 +63,7 @@ You deploy bootstrap + validators separately for more control.
 
    <img width="1352" height="760" src="https://github.com/user-attachments/assets/82aa445a-c1b7-46de-aa20-abbecc5b79ba">
 
-7. The logs will show generated validator keypairs.
+7. Visit the port `http://reef.host:48765` or your IP address / hostname at port `48765`
 
    <img width="1352" height="803" src="https://github.com/user-attachments/assets/6566a708-3d07-4c90-8dba-26a123dc8514">
 
@@ -103,7 +103,7 @@ This service is used by the validators to automatically fetch the **custom chain
 
 <img width="1352" height="762" src="https://github.com/user-attachments/assets/33337aa2-a40e-4d91-9b4a-a77881844222">
 
-2. Open the environment tab and paste your seeds & addresses:
+2. Open the environment tab and paste your seeds & addresses you have copied in step 1:
 
 <img width="1352" height="767" src="https://github.com/user-attachments/assets/7c05a2e1-ec86-48c2-8015-9909fa44b0fc">
 
