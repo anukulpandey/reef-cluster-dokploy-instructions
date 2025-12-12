@@ -64,12 +64,25 @@ Once done with these, click on deploy and the logs should look like this.
 
 To add more validators you can generate more validator keys using Reef Chain Keys Generator template and use them with the following template.
 
-
 <img width="1347" height="754" alt="Screenshot 2025-12-12 at 4 18 57 PM" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132" />
 
 Select `Reef Chain - Validator`
 
 and replace the environments and deploy it.
+
+Next step is to run the eth-rpc , we can do that from templates and selecting `Reef Chain - ETH RPC` :
+
+<img width="1352" height="765" alt="Screenshot 2025-12-12 at 4 22 30 PM" src="https://github.com/user-attachments/assets/e3644fdf-4465-4fc8-967b-10f9d93513bc" />
+
+Deploy and it will point to `http://reef.host:9944` by default, you can change that in the environment.
+
+<img width="977" height="505" alt="Screenshot 2025-12-12 at 4 23 39 PM" src="https://github.com/user-attachments/assets/6d6a5b02-8c8b-4926-a635-a6829c2c2c4d" />
+
+<img width="1352" height="755" alt="Screenshot 2025-12-12 at 4 23 51 PM" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db" />
+
+The port in the environment is for eth rpc. i.e it will be run at `http://reef.host:8545`.
+
+Voila! the cluster is running fine.
 
 ==========================
 
