@@ -126,12 +126,6 @@ This service is used by the validators to automatically fetch the **custom chain
 
 Generate more validators using **Reef Chain – Keys Generator**.
 
-Then deploy:
-
-### **Reef Chain – Validator**
-
-<img width="1347" height="754" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132">
-
 Fill in the new keys → Deploy.
 
 ---
