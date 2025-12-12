@@ -1,157 +1,223 @@
-# Reef Cluster Dokploy Instructions
+# 🌊 **Reef Cluster – Dokploy Deployment Guide**
 
-We can run the cluster in 2 ways.
+A Reef validator cluster can be deployed in **two different ways** on Dokploy:
 
-1. Single template for whole cluster
+### 🟢 **[Method 1: Single Template (Full Cluster Setup)](#method-1-single-template---full-cluster-setup)**
 
-2. Multiple templates ( Separate bootstrap and validators setup )
+A single deployment handles bootnode + all validators + RPC.
 
-=========================
+### 🔵 **[Method 2: Multiple Templates (Bootstrap + Individual Validators)](#method-2-multiple-templates---bootstrap--validators)**
 
-The first step is to generate keys for running the validator, you can do it as follows:
+You deploy bootstrap + validators separately for more control.
 
-Click on create service
+---
 
-<img width="1348" height="767" alt="Screenshot 2025-12-12 at 2 32 48 PM" src="https://github.com/user-attachments/assets/61ffc1b3-7601-4fa0-a8c9-37dd91fe5f0c" />
+# 📑 **Table of Contents**
 
-Select Template from the menu
+1. [Method 1 – Single Template](#method-1-single-template---full-cluster-setup)
 
-Add `https://d1633d6c.templates-70k.pages.dev/` url at top right
+   * [1. Generate Validator Keys](#step-1-generate-validator-keys)
+   * [2. Deploy Spec Generator](#step-2-deploy-custom-spec-generator)
+   * [3. Deploy Full Cluster](#step-3-deploy-the-complete-cluster)
+   * [4. Adding More Validators](#adding-more-validators)
+   * [5. Deploy ETH RPC](#deploy-ethereum-rpc)
 
-Search Reef 
+2. [Method 2 – Multiple Templates](#method-2-multiple-templates---bootstrap--validators)
 
-<img width="1345" height="760" alt="Screenshot 2025-12-12 at 2 33 41 PM" src="https://github.com/user-attachments/assets/0a73fe6e-7e5d-4553-bcd7-0dca6fc2a831" />
+   * [1. Generate Validator Keys](#step-1-generate-validator-keys-method-2)
+   * [2. Deploy Bootnode Validator](#step-2-deploy-bootnode-validator)
+   * [3. Deploy Individual Validators](#step-3-deploy-additional-validators)
+   * [4. Deploy ETH RPC](#deploy-eth-rpc-method-2)
 
-Click on "Create" button on `Reef Chain - Keys Generator` card and click confirm on popup.
+---
 
-<img width="1352" height="768" alt="Screenshot 2025-12-12 at 2 34 43 PM" src="https://github.com/user-attachments/assets/2a8cae47-6ad4-4d82-aa79-3f7dfb9599ff" />
+---
 
-Open the newly generated card service and click on `Deploy` 
+# 🟢 **Method 1: Single Template – Full Cluster Setup**
 
-<img width="1352" height="760" alt="Screenshot 2025-12-12 at 4 07 57 PM" src="https://github.com/user-attachments/assets/82aa445a-c1b7-46de-aa20-abbecc5b79ba" />
+---
 
-The logs must look like this, it has generated 3 validators keypairs.
+## **Step 1: Generate Validator Keys**
 
-<img width="1352" height="803" alt="Screenshot 2025-12-12 at 4 09 03 PM" src="https://github.com/user-attachments/assets/6566a708-3d07-4c90-8dba-26a123dc8514" />
+1. Go to **Create Service**
 
-You will get keypairs like these
+   <img width="1348" height="767" src="https://github.com/user-attachments/assets/61ffc1b3-7601-4fa0-a8c9-37dd91fe5f0c">
 
-<img width="1352" height="805" alt="Screenshot 2025-12-12 at 4 10 30 PM" src="https://github.com/user-attachments/assets/1efb99f2-aa24-4ff4-8326-da8a79104afd" />
+2. Select **Template** from the menu.
 
-Copy the address and seed, we will need these later when configuring the validators
+3. Add template repo URL at the top-right:
 
-Now create custom spec file using the generator, for that go to templates and create the one with name `Reef Chain - Custom Spec Generator` :
+   ```
+   https://d1633d6c.templates-70k.pages.dev/
+   ```
 
-<img width="1352" height="808" alt="Screenshot 2025-12-12 at 4 36 21 PM" src="https://github.com/user-attachments/assets/990a8521-7a7e-43ae-aaa1-72b1ac253a13" />
+4. Search for **“Reef”**
 
-This service runs at port 8000. i.e `http://reef.host:8000`, you can change the port from environment of this template.
+   <img width="1345" height="760" src="https://github.com/user-attachments/assets/0a73fe6e-7e5d-4553-bcd7-0dca6fc2a831">
 
-We will use this url later in the cluster to generate and download the custom spec file with the validator info we will provide.
+5. Click **Create** on **Reef Chain – Keys Generator**, then confirm.
 
-From templates select `Reef Chain - Dev Cluster` :
+   <img width="1352" height="768" src="https://github.com/user-attachments/assets/2a8cae47-6ad4-4d82-aa79-3f7dfb9599ff">
 
-<img width="1352" height="762" alt="Screenshot 2025-12-12 at 5 26 59 PM" src="https://github.com/user-attachments/assets/33337aa2-a40e-4d91-9b4a-a77881844222" />
+6. Deploy the service.
 
-Go to environment and update the variables with the ones you have generated using `Reef Chain - Keys Generator`:
+   <img width="1352" height="760" src="https://github.com/user-attachments/assets/82aa445a-c1b7-46de-aa20-abbecc5b79ba">
 
-<img width="1352" height="767" alt="Screenshot 2025-12-12 at 5 28 07 PM" src="https://github.com/user-attachments/assets/7c05a2e1-ec86-48c2-8015-9909fa44b0fc" />
+7. The logs will show generated validator keypairs.
 
-You can change the URL of specgenurl with the one you have deployed or use `http://reef.host:8000` as default
+   <img width="1352" height="803" src="https://github.com/user-attachments/assets/6566a708-3d07-4c90-8dba-26a123dc8514">
 
-Once done with these, click on deploy and the logs should look like this.
+8. Copy all **address + seed pairs**, they will be needed later.
 
-<img width="1352" height="765" alt="Screenshot 2025-12-12 at 5 30 09 PM" src="https://github.com/user-attachments/assets/dabf1beb-900b-4627-a656-78d94cb2771b" />
+   <img width="1352" height="805" src="https://github.com/user-attachments/assets/1efb99f2-aa24-4ff4-8326-da8a79104afd">
 
-To add more validators you can generate more validator keys using Reef Chain Keys Generator template and use them with the following template.
+---
 
-<img width="1347" height="754" alt="Screenshot 2025-12-12 at 4 18 57 PM" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132" />
+## **Step 2: Deploy Custom Spec Generator**
 
-Select `Reef Chain - Validator`
+1. Go to Templates and search for:
 
-and replace the environments and deploy it.
+### **Reef Chain – Custom Spec Generator**
 
-Next step is to run the eth-rpc , we can do that from templates and selecting `Reef Chain - ETH RPC` :
+<img width="1352" height="808" src="https://github.com/user-attachments/assets/990a8521-7a7e-43ae-aaa1-72b1ac253a13">
 
-<img width="1352" height="765" alt="Screenshot 2025-12-12 at 4 22 30 PM" src="https://github.com/user-attachments/assets/e3644fdf-4465-4fc8-967b-10f9d93513bc" />
+2. Deploy it.
 
-Deploy and it will point to `http://reef.host:9944` by default, you can change that in the environment.
+3. It runs on port **8000** by default:
 
-<img width="977" height="505" alt="Screenshot 2025-12-12 at 4 23 39 PM" src="https://github.com/user-attachments/assets/6d6a5b02-8c8b-4926-a635-a6829c2c2c4d" />
+   ```
+   http://reef.host:8000
+   ```
 
-<img width="1352" height="755" alt="Screenshot 2025-12-12 at 4 23 51 PM" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db" />
+4. You can change the port in environment variables if needed.
 
-The port in the environment is for eth rpc. i.e it will be run at `http://reef.host:8545`.
+This service is used by the validators to automatically fetch the **custom chain spec**.
 
-Voila! the cluster is running fine.
+---
 
-==========================
+## **Step 3: Deploy the Complete Cluster**
 
-The first step is to generate keys for running the validator, you can do it as follows:
+1. From templates, search for:
 
-Click on create service
+### **Reef Chain – Dev Cluster**
 
-<img width="1348" height="767" alt="Screenshot 2025-12-12 at 2 32 48 PM" src="https://github.com/user-attachments/assets/61ffc1b3-7601-4fa0-a8c9-37dd91fe5f0c" />
+<img width="1352" height="762" src="https://github.com/user-attachments/assets/33337aa2-a40e-4d91-9b4a-a77881844222">
 
-Select Template from the menu
+2. Open the environment tab and paste your seeds & addresses:
 
-Add `https://d1633d6c.templates-70k.pages.dev/` url at top right
+<img width="1352" height="767" src="https://github.com/user-attachments/assets/7c05a2e1-ec86-48c2-8015-9909fa44b0fc">
 
-Search Reef 
+3. You may configure:
 
-<img width="1345" height="760" alt="Screenshot 2025-12-12 at 2 33 41 PM" src="https://github.com/user-attachments/assets/0a73fe6e-7e5d-4553-bcd7-0dca6fc2a831" />
+   * `specgenurl` → URL of your custom spec generator
+   * default: `http://reef.host:8000`
 
-Click on "Create" button on `Reef Chain - Keys Generator` card and click confirm on popup.
+4. Deploy the service.
 
-<img width="1352" height="768" alt="Screenshot 2025-12-12 at 2 34 43 PM" src="https://github.com/user-attachments/assets/2a8cae47-6ad4-4d82-aa79-3f7dfb9599ff" />
+5. Logs should show successful bootnode + 3 validators starting:
 
-Open the newly generated card service and click on `Deploy` 
+<img width="1352" height="765" src="https://github.com/user-attachments/assets/dabf1beb-900b-4627-a656-78d94cb2771b">
 
-<img width="1352" height="760" alt="Screenshot 2025-12-12 at 4 07 57 PM" src="https://github.com/user-attachments/assets/82aa445a-c1b7-46de-aa20-abbecc5b79ba" />
+🎉 **The cluster is now running!**
 
-The logs must look like this, it has generated 3 validators keypairs.
+---
 
-<img width="1352" height="803" alt="Screenshot 2025-12-12 at 4 09 03 PM" src="https://github.com/user-attachments/assets/6566a708-3d07-4c90-8dba-26a123dc8514" />
+## **Adding More Validators**
 
-You will get keypairs like these
+Generate more validators using **Reef Chain – Keys Generator**.
 
-<img width="1352" height="805" alt="Screenshot 2025-12-12 at 4 10 30 PM" src="https://github.com/user-attachments/assets/1efb99f2-aa24-4ff4-8326-da8a79104afd" />
+Then deploy:
 
-Copy the address and seed, we will need these later when configuring the validators
+### **Reef Chain – Validator**
 
-Now let's deploy, bootstrap, create a new service, select template and from templates select `Reef Chain - Bootnode Validator` :
+<img width="1347" height="754" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132">
 
-<img width="1349" height="768" alt="Screenshot 2025-12-12 at 4 12 00 PM" src="https://github.com/user-attachments/assets/dd42462e-22c9-44f9-8625-01cad45a77d6" />
+Fill in the new keys → Deploy.
 
-Paste the validator keys here in environment
+---
 
-<img width="1342" height="756" alt="Screenshot 2025-12-12 at 4 13 54 PM" src="https://github.com/user-attachments/assets/eb2a26a8-bc5c-4d54-aade-b47086c9fd89" />
+## **Deploy Ethereum RPC**
 
-the `PORT=8000` is for making the spec file publicly available which will allow other validators to fetch it from the bootstrap template.
+Search template:
 
-`P2P_PORT=30335` is responsible for p2p connection between the peers.
+### **Reef Chain – ETH RPC**
 
-In the logs of validator, there wont be peers initially, need to run the validators for that.
+<img width="1352" height="765" src="https://github.com/user-attachments/assets/e3644fdf-4465-4fc8-967b-10f9d93513bc">
 
-<img width="1347" height="754" alt="Screenshot 2025-12-12 at 4 18 57 PM" src="https://github.com/user-attachments/assets/68568d1f-8ee2-4abc-a7a0-d9087c09b132" />
+Deploy → It will use the default substrate RPC:
 
-Select `Reef Chain - Validator`
+```
+http://reef.host:9944
+```
 
-and replace the environments and deploy it.
+ETH RPC runs at:
 
-Do the same for 2 more validators, 3 validators will make the cluster start finalising blocks.
+```
+http://reef.host:8545
+```
 
-<img width="1352" height="766" alt="Screenshot 2025-12-12 at 4 19 39 PM" src="https://github.com/user-attachments/assets/98c57f34-d1f6-48e4-a11b-09a514817e0f" />
+<img width="977" height="505" src="https://github.com/user-attachments/assets/6d6a5b02-8c8b-4926-a635-a6829c2c2c4d">
+<img width="1352" height="755" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db">
 
-Next step is to run the eth-rpc , we can do that from templates and selecting `Reef Chain - ETH RPC` :
+🎉 **Your full cluster (bootnode + validators + RPC + ETH RPC) is now live.**
 
-<img width="1352" height="765" alt="Screenshot 2025-12-12 at 4 22 30 PM" src="https://github.com/user-attachments/assets/e3644fdf-4465-4fc8-967b-10f9d93513bc" />
+---
 
-Deploy and it will point to `http://reef.host:9944` by default, you can change that in the environment.
+---
 
-<img width="977" height="505" alt="Screenshot 2025-12-12 at 4 23 39 PM" src="https://github.com/user-attachments/assets/6d6a5b02-8c8b-4926-a635-a6829c2c2c4d" />
+# 🔵 **Method 2: Multiple Templates – Bootstrap & Validators**
 
-<img width="1352" height="755" alt="Screenshot 2025-12-12 at 4 23 51 PM" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db" />
+---
 
-The port in the environment is for eth rpc. i.e it will be run at `http://reef.host:8545`.
+## **Step 1: Generate Validator Keys (Same as Method 1)**
 
-Voila! the cluster is running fine.
+👉 Jump to: [Generate Validator Keys](#step-1-generate-validator-keys)
+
+---
+
+## **Step 2: Deploy Bootnode Validator**
+
+Create service → choose template:
+
+### **Reef Chain – Bootnode Validator**
+
+<img width="1349" height="768" src="https://github.com/user-attachments/assets/dd42462e-22c9-44f9-8625-01cad45a77d6">
+
+Fill in:
+
+* `v1sec`, `v2sec`, `v3sec`
+* `v1addr`, `v2addr`, `v3addr`
+* `PORT=8000` → exposes custom spec
+* `P2P_PORT=30335` → bootnode peer port
+
+<img width="1342" height="756" src="https://github.com/user-attachments/assets/eb2a26a8-bc5c-4d54-aade-b47086c9fd89">
+
+Bootnode starts → no peers yet (expected).
+
+---
+
+## **Step 3: Deploy Additional Validators**
+
+Use:
+
+### **Reef Chain – Validator**
+
+<img width="1352" height="766" src="https://github.com/user-attachments/assets/98c57f34-d1f6-48e4-a11b-09a514817e0f">
+
+Deploy 2 or more validators → finalize blocks.
+
+---
+
+## **Deploy ETH RPC (Method 2)**
+
+Same template:
+
+### **Reef Chain – ETH RPC**
+
+<img width="1352" height="765" src="https://github.com/user-attachments/assets/e3644fdf-4465-4fc8-967b-10f9d93513bc">
+
+ETH RPC default port:
+
+```
+http://reef.host:8545
+```
