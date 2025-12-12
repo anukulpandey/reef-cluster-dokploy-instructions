@@ -72,10 +72,8 @@ Deploy and it will point to `http://reef.host:9944` by default, you can change t
 
 <img width="977" height="505" alt="Screenshot 2025-12-12 at 4 23 39 PM" src="https://github.com/user-attachments/assets/6d6a5b02-8c8b-4926-a635-a6829c2c2c4d" />
 
+<img width="1352" height="755" alt="Screenshot 2025-12-12 at 4 23 51 PM" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db" />
+
 The port in the environment is for eth rpc. i.e it will be run at `http://reef.host:8545`.
 
 Voila! the cluster is running fine.
-
-
-
-<img width="1352" height="755" alt="Screenshot 2025-12-12 at 4 23 51 PM" src="https://github.com/user-attachments/assets/3d66ed43-4e6c-48c5-953a-ca12cfede6db" />
